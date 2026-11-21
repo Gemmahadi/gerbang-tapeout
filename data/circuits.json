@@ -1,0 +1,1134 @@
+{
+  "chain": {
+    "name": "X Layer",
+    "chainId": 196,
+    "rpcs": [
+      "https://rpc.xlayer.tech",
+      "https://xlayerrpc.okx.com",
+      "https://xlayer.drpc.org"
+    ]
+  },
+  "processor": {
+    "address": "0xa5fc69Ca2D3d462CCa204D894D85ac8071c4F0f0",
+    "name": "XBOT",
+    "explorer": "https://www.okx.com/web3/explorer/xlayer/address/0xa5fc69Ca2D3d462CCa204D894D85ac8071c4F0f0"
+  },
+  "processors": [
+    {
+      "address": "0xa5fc69Ca2D3d462CCa204D894D85ac8071c4F0f0",
+      "name": "XBOT",
+      "processorIndex": 268,
+      "explorer": "https://www.okx.com/web3/explorer/xlayer/address/0xa5fc69Ca2D3d462CCa204D894D85ac8071c4F0f0",
+      "circuits": 5,
+      "distinctNetlists": 2,
+      "owner": "0x456b2071c82c9c7ae84e0f5202e3da3d15fe42cc"
+    },
+    {
+      "address": "0xb57b56034e2dc25161e2512CfC40b24EA3bee1Fb",
+      "name": "ViperX Risk Guardian",
+      "processorIndex": 424,
+      "explorer": "https://www.okx.com/web3/explorer/xlayer/address/0xb57b56034e2dc25161e2512CfC40b24EA3bee1Fb",
+      "circuits": 4,
+      "distinctNetlists": 4,
+      "owner": "0x9f718b338ccc69b6ac211dc8239548e43095813a"
+    }
+  ],
+  "factory": {
+    "address": "0x1f09daefa827f02cbb40967cc91b259763760761",
+    "name": "TapeOut Factory",
+    "explorer": "https://www.okx.com/web3/explorer/xlayer/address/0x1f09daefa827f02cbb40967cc91b259763760761",
+    "cpuCount": 438,
+    "verified": "factory() on both processors returns this address; cpuCount() = 438 at block 76470149"
+  },
+  "market": {
+    "address": "0xd89f358c48a7B632c9845af2a02A32eB90DD75DB",
+    "explorer": "https://www.okx.com/web3/explorer/xlayer/address/0xd89f358c48a7B632c9845af2a02A32eB90DD75DB",
+    "verified": "bytecode exists; not further probed"
+  },
+  "implementation": {
+    "beacon": "0xf70d1ed4f62cf3780157b0b421b7e2f45bd0991c",
+    "logic": "0x977f217887e085d298cb3819cdad5a0ee35f29b2",
+    "note": "Both processors are BeaconProxies pointing at the same UpgradeableBeacon; the beacon's implementation() returns the shared logic contract. Contracts are upgradeable (beacon owner can change the implementation) \u2014 do not claim immutability."
+  },
+  "abi": [
+    "function netlist(uint256 tokenId) view returns (bytes)  // selector 0x3fc4be56 \u2014 VERIFIED live",
+    "function eval(uint256 tokenId, bytes bits) view returns (bytes)  // selector 0x934d06ea \u2014 VERIFIED live; bits encoding reverse-engineered (see decode), TAPI-25 left it TODO",
+    "function name() view returns (string)  // 0x06fdde03 \u2014 VERIFIED (XBOT / ViperX Risk Guardian)",
+    "function symbol() view returns (string)  // 0x95d89b41 \u2014 VERIFIED (XBOT / VXRG)",
+    "function ownerOf(uint256 tokenId) view returns (address)  // 0x6352211e \u2014 VERIFIED",
+    "function balanceOf(address owner) view returns (uint256)  // 0x70a08231 \u2014 VERIFIED",
+    "function nextId() view returns (uint256)  // 0x61b8ce8c \u2014 VERIFIED; returns the CIRCUIT COUNT (ViperX 4, XBOT 5), not the next id",
+    "function factory() view returns (address)  // 0xc45a0155 \u2014 VERIFIED (returns the Factory address)",
+    "function tokenURI(uint256 tokenId) view returns (string)  // 0xc87b56dd \u2014 VERIFIED; returns empty string for every tested token",
+    "function supportsInterface(bytes4 interfaceId) view returns (bool)  // 0x01ffc9a7 \u2014 VERIFIED (ERC-721 0x80ac58cd -> true)",
+    "function TREASURY() view returns (address)  // 0x2d2c5565 \u2014 VERIFIED (0xebecedea36e598b64e17f8d519eb77441c539f76, same for both processors)",
+    "function getApproved(uint256 tokenId) view returns (address)  // 0x081812fc \u2014 VERIFIED (0x0 for token 1)",
+    "function isApprovedForAll(address,address) view returns (bool)  // 0xe985e9c5 \u2014 VERIFIED (false)",
+    "function approve(address,uint256)  // 0x095ea7b3 \u2014 standard ERC-721, not called (write)",
+    "function transferFrom(address,address,uint256)  // 0x23b872dd \u2014 standard ERC-721, not called (write)",
+    "function safeTransferFrom(address,address,uint256)  // 0x42842e0e \u2014 standard ERC-721, not called (write)",
+    "function safeTransferFrom(address,address,uint256,bytes)  // 0xb88d4fde \u2014 standard ERC-721, not called (write)",
+    "function setApprovalForAll(address,bool)  // 0xa22cb465 \u2014 standard ERC-721, not called (write)",
+    "function initialize(string,string,address,address)  // 0x8f15b414 \u2014 initializer, not called",
+    "function sweepFees()  // 0xd113b95c \u2014 not called (write)",
+    "UNIDENTIFIED selectors present in the logic contract (do not call; function unknown): 0x084d60f1, 0x36e07b61, 0x6fbd1719, 0x7bd3ac1d, 0xadfb2b69, 0xe8281a1a \u2014 probably mint/etch + price, unverified"
+  ],
+  "circuits": [
+    {
+      "id": "1",
+      "canonical": "1.268.tape",
+      "name": "XBOT NAND-2 (NOT-AND of 2 signals)",
+      "level": 1,
+      "inputs": 2,
+      "outputs": 1,
+      "inputsEffectiveWires": [
+        2,
+        3
+      ],
+      "truthTable": {
+        "00": "1",
+        "10": "1",
+        "01": "1",
+        "11": "0"
+      },
+      "samples": null,
+      "function": "out = NOT(w2 AND w3); equivalently NAND of the two effective inputs (wires 2,3).",
+      "netlist": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "netlistBytes": 21,
+      "netlistHash": "0xc738359c3dde133a010e00bbc3dc1bd8685e3028a04e5df6e0f00cffa2ce2524",
+      "calldata": "0x934d06ea0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010300000000000000000000000000000000000000000000000000000000000000",
+      "calldataExpected": "0x00 (bytes [0x00])",
+      "decode": "eth_call to the processor contract with the calldata above (function eval(uint256,bytes), selector 0x934d06ea). The return is ABI-encoded bytes: offset (32B) + length (32B) + data. Data is 1 byte: 0x00 = output 0, 0x01 = output 1. Bit packing (verified on-chain): the `bits` argument is little-endian bytes; byte j bit k drives wire (8j+k+2). Wire 0 is constant 0 (GND) and wire 1 is constant 1 (VCC) \u2014 wire 1 = 1 was proven by two discriminating evals (ViperX circuits 2 and 3). Netlist format (verified): raw bytes from netlist(tokenId) are 7-byte records [type=0x00 (NAND)][in1: uint24 BE][in2: uint24 BE]; gate i outputs wire (n+i) where n = number of input wires (wires 0..n-1); the circuit output is the last gate's output. Simulate in JS: wires[0]=0, wires[1]=1, wires[2..n-1] from bits, then each gate wires[n+i] = NOT(wires[a] AND wires[b]). Example calldata uses bits=0x03 (w2=1,w3=1) so the expected output is 0.",
+      "verifiedBlock": 76470115,
+      "verifiedAt": "2026-11-21",
+      "source": "https://www.okx.com/web3/explorer/xlayer/address/0xa5fc69Ca2D3d462CCa204D894D85ac8071c4F0f0 ; https://www.xbotprocessor.com/",
+      "processorAddress": "0xa5fc69Ca2D3d462CCa204D894D85ac8071c4F0f0"
+    },
+    {
+      "id": "3",
+      "canonical": "3.268.tape",
+      "name": "XBOT Consensus 2-of-3 (Risk + Liquidity + Market)",
+      "level": 2,
+      "inputs": 3,
+      "outputs": 1,
+      "inputsEffectiveWires": [
+        2,
+        3,
+        4
+      ],
+      "truthTable": {
+        "000": "0",
+        "100": "0",
+        "010": "0",
+        "110": "1",
+        "001": "0",
+        "101": "1",
+        "011": "1",
+        "111": "1"
+      },
+      "samples": null,
+      "function": "out = 1 iff at least 2 of (Risk=w2, Liquidity=w3, Market=w4) are 1 (2-of-3 majority). Site's NAND network N1..N5,OUT reproduces the same function; the on-chain netlist appends a double-NOT buffer (gates 7-8) after OUT.",
+      "netlist": [
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          11,
+          11
+        ]
+      ],
+      "netlistBytes": 56,
+      "netlistHash": "0x645c8d170cb6927f49d770cadfc922a68116d256cb674fb5b9f325116c18aeed",
+      "calldata": "0x934d06ea0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010700000000000000000000000000000000000000000000000000000000000000",
+      "calldataExpected": "0x01 (bytes [0x01])",
+      "decode": "eth_call to the processor contract with the calldata above (function eval(uint256,bytes), selector 0x934d06ea). The return is ABI-encoded bytes: offset (32B) + length (32B) + data. Data is 1 byte: 0x00 = output 0, 0x01 = output 1. Bit packing (verified on-chain): the `bits` argument is little-endian bytes; byte j bit k drives wire (8j+k+2). Wire 0 is constant 0 (GND) and wire 1 is constant 1 (VCC) \u2014 wire 1 = 1 was proven by two discriminating evals (ViperX circuits 2 and 3). Netlist format (verified): raw bytes from netlist(tokenId) are 7-byte records [type=0x00 (NAND)][in1: uint24 BE][in2: uint24 BE]; gate i outputs wire (n+i) where n = number of input wires (wires 0..n-1); the circuit output is the last gate's output. Simulate in JS: wires[0]=0, wires[1]=1, wires[2..n-1] from bits, then each gate wires[n+i] = NOT(wires[a] AND wires[b]). Input order verified from the gate structure (not only the symmetric truth table): w2=Risk, w3=Liquidity, w4=Market. Example calldata uses bits=0x07 (all three 1) so the expected output is 1.",
+      "verifiedBlock": 76470115,
+      "verifiedAt": "2026-11-21",
+      "source": "https://www.okx.com/web3/explorer/xlayer/address/0xa5fc69Ca2D3d462CCa204D894D85ac8071c4F0f0 ; https://www.xbotprocessor.com/ (\"Circuit 3.2.268\", consensus N1-N5/OUT, Risk/Liquidity/Market)",
+      "processorAddress": "0xa5fc69Ca2D3d462CCa204D894D85ac8071c4F0f0"
+    },
+    {
+      "id": "1",
+      "canonical": "1.424.tape",
+      "name": "ViperX risk circuit #1 \u2014 leverage limit (value <= 2000, i.e. 20.00x)",
+      "level": 3,
+      "inputs": 16,
+      "outputs": 1,
+      "inputsEffectiveWires": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "truthTable": {
+        "0000000000000000": "1",
+        "0000011111001111": "1",
+        "0000011111010000": "1",
+        "0000011111010001": "0",
+        "1111111111111111": "0"
+      },
+      "samples": [
+        {
+          "bits": "0000",
+          "fieldValue": 0,
+          "inputBits16": "0000000000000000",
+          "out": "1"
+        },
+        {
+          "bits": "cf07",
+          "fieldValue": 1999,
+          "inputBits16": "0000011111001111",
+          "out": "1"
+        },
+        {
+          "bits": "d007",
+          "fieldValue": 2000,
+          "inputBits16": "0000011111010000",
+          "out": "1"
+        },
+        {
+          "bits": "d107",
+          "fieldValue": 2001,
+          "inputBits16": "0000011111010001",
+          "out": "0"
+        },
+        {
+          "bits": "ffff",
+          "fieldValue": 65535,
+          "inputBits16": "1111111111111111",
+          "out": "0"
+        }
+      ],
+      "function": "out = 1 iff the 16-bit input value (wires 2..17, wire 2 = bit 0) is <= 2000. Interpreted as leverage in 0.01x units: 2000 = 20.00x, matching the docs' 'A trade above 20x is rejected on chain'.",
+      "netlist": [
+        [
+          2,
+          2
+        ],
+        [
+          18,
+          1
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          21,
+          20
+        ],
+        [
+          22,
+          22
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          24,
+          23
+        ],
+        [
+          25,
+          25
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          27,
+          26
+        ],
+        [
+          6,
+          28
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          30,
+          29
+        ],
+        [
+          8,
+          31
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          9,
+          33
+        ],
+        [
+          34,
+          34
+        ],
+        [
+          10,
+          35
+        ],
+        [
+          36,
+          36
+        ],
+        [
+          11,
+          37
+        ],
+        [
+          38,
+          38
+        ],
+        [
+          12,
+          39
+        ],
+        [
+          13,
+          13
+        ],
+        [
+          41,
+          40
+        ],
+        [
+          42,
+          42
+        ],
+        [
+          14,
+          14
+        ],
+        [
+          44,
+          43
+        ],
+        [
+          45,
+          45
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          47,
+          46
+        ],
+        [
+          48,
+          48
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          50,
+          49
+        ],
+        [
+          51,
+          51
+        ],
+        [
+          17,
+          17
+        ],
+        [
+          53,
+          52
+        ],
+        [
+          54,
+          54
+        ]
+      ],
+      "netlistBytes": 266,
+      "netlistHash": "0x3cce40e99588a41cbcd3315469e7a755a7afb5ef7aa151500a9c40a99fc30efe",
+      "calldata": "0x934d06ea000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000002d007000000000000000000000000000000000000000000000000000000000000",
+      "calldataExpected": "0x01 (bytes [0x01])",
+      "decode": "eth_call to the processor contract with the calldata above (function eval(uint256,bytes), selector 0x934d06ea). The return is ABI-encoded bytes: offset (32B) + length (32B) + data. Data is 1 byte: 0x00 = output 0, 0x01 = output 1. Bit packing (verified on-chain): the `bits` argument is little-endian bytes; byte j bit k drives wire (8j+k+2). Wire 0 is constant 0 (GND) and wire 1 is constant 1 (VCC) \u2014 wire 1 = 1 was proven by two discriminating evals (ViperX circuits 2 and 3). Netlist format (verified): raw bytes from netlist(tokenId) are 7-byte records [type=0x00 (NAND)][in1: uint24 BE][in2: uint24 BE]; gate i outputs wire (n+i) where n = number of input wires (wires 0..n-1); the circuit output is the last gate's output. Simulate in JS: wires[0]=0, wires[1]=1, wires[2..n-1] from bits, then each gate wires[n+i] = NOT(wires[a] AND wires[b]). This circuit's truth table is too large for a full listing (2^16 rows); the 5 rows in truthTable are on-chain-verified samples keyed by the raw 16-bit input V (MSB-first binary). The complete function is the threshold rule above, verified exhaustively by simulation over all caring wires and spot-checked on-chain at the threshold boundary (values 0/1999/2000/2001/65535). Example calldata evaluates the threshold value itself, expected output 1.",
+      "verifiedBlock": 76470115,
+      "verifiedAt": "2026-11-21",
+      "source": "https://www.okx.com/web3/explorer/xlayer/address/0xb57b56034e2dc25161e2512CfC40b24EA3bee1Fb ; https://docs.viperx.site/roadmap (\"Leverage, slippage, drawdown and cooldown limits\", \"A trade above 20x is rejected on chain\")",
+      "processorAddress": "0xb57b56034e2dc25161e2512CfC40b24EA3bee1Fb"
+    },
+    {
+      "id": "2",
+      "canonical": "2.424.tape",
+      "name": "ViperX risk circuit #2 \u2014 slippage limit (value <= 100, likely 100 bps = 1%)",
+      "level": 4,
+      "inputs": 16,
+      "outputs": 1,
+      "inputsEffectiveWires": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "truthTable": {
+        "0000000000000000": "1",
+        "0000000011000011": "1",
+        "0000000011001000": "1",
+        "0000000011001001": "0",
+        "1111111111111011": "0"
+      },
+      "samples": [
+        {
+          "bits": "0000",
+          "fieldValue": 0,
+          "inputBits16": "0000000000000000",
+          "out": "1"
+        },
+        {
+          "bits": "c300",
+          "fieldValue": 99,
+          "inputBits16": "0000000011000011",
+          "out": "1"
+        },
+        {
+          "bits": "c800",
+          "fieldValue": 100,
+          "inputBits16": "0000000011001000",
+          "out": "1"
+        },
+        {
+          "bits": "c900",
+          "fieldValue": 101,
+          "inputBits16": "0000000011001001",
+          "out": "0"
+        },
+        {
+          "bits": "fbff",
+          "fieldValue": 32767,
+          "inputBits16": "1111111111111011",
+          "out": "0"
+        }
+      ],
+      "function": "out = 1 iff the field value is <= 100. Field is built from caring wires [2,3,5,6,7,8,9,10,11,12,13,14,15,16,17] LSB-first (wire 4 is a don't-care); raw 16-bit input V is NOT the field value \u2014 see samples (bits -> fieldValue).",
+      "netlist": [
+        [
+          2,
+          2
+        ],
+        [
+          18,
+          1
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          21,
+          20
+        ],
+        [
+          22,
+          22
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          24,
+          23
+        ],
+        [
+          5,
+          25
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          27,
+          26
+        ],
+        [
+          28,
+          28
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          30,
+          29
+        ],
+        [
+          8,
+          31
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          9,
+          33
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          35,
+          34
+        ],
+        [
+          36,
+          36
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          38,
+          37
+        ],
+        [
+          39,
+          39
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          41,
+          40
+        ],
+        [
+          42,
+          42
+        ],
+        [
+          13,
+          13
+        ],
+        [
+          44,
+          43
+        ],
+        [
+          45,
+          45
+        ],
+        [
+          14,
+          14
+        ],
+        [
+          47,
+          46
+        ],
+        [
+          48,
+          48
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          50,
+          49
+        ],
+        [
+          51,
+          51
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          53,
+          52
+        ],
+        [
+          54,
+          54
+        ],
+        [
+          17,
+          17
+        ],
+        [
+          56,
+          55
+        ],
+        [
+          57,
+          57
+        ]
+      ],
+      "netlistBytes": 287,
+      "netlistHash": "0xede8584126ce5bfc7cefe17f768a027a91dc6219055bae56f14fa6657111212f",
+      "calldata": "0x934d06ea000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000002c800000000000000000000000000000000000000000000000000000000000000",
+      "calldataExpected": "0x01 (bytes [0x01])",
+      "decode": "eth_call to the processor contract with the calldata above (function eval(uint256,bytes), selector 0x934d06ea). The return is ABI-encoded bytes: offset (32B) + length (32B) + data. Data is 1 byte: 0x00 = output 0, 0x01 = output 1. Bit packing (verified on-chain): the `bits` argument is little-endian bytes; byte j bit k drives wire (8j+k+2). Wire 0 is constant 0 (GND) and wire 1 is constant 1 (VCC) \u2014 wire 1 = 1 was proven by two discriminating evals (ViperX circuits 2 and 3). Netlist format (verified): raw bytes from netlist(tokenId) are 7-byte records [type=0x00 (NAND)][in1: uint24 BE][in2: uint24 BE]; gate i outputs wire (n+i) where n = number of input wires (wires 0..n-1); the circuit output is the last gate's output. Simulate in JS: wires[0]=0, wires[1]=1, wires[2..n-1] from bits, then each gate wires[n+i] = NOT(wires[a] AND wires[b]). This circuit's truth table is too large for a full listing (2^16 rows); the 5 rows in truthTable are on-chain-verified samples keyed by the raw 16-bit input V (MSB-first binary). The complete function is the threshold rule above, verified exhaustively by simulation over all caring wires and spot-checked on-chain at the threshold boundary (values 0/99/100/101/32767(field)). Example calldata evaluates the threshold value itself, expected output 1.",
+      "verifiedBlock": 76470115,
+      "verifiedAt": "2026-11-21",
+      "source": "https://www.okx.com/web3/explorer/xlayer/address/0xb57b56034e2dc25161e2512CfC40b24EA3bee1Fb ; https://docs.viperx.site/roadmap (\"Leverage, slippage, drawdown and cooldown limits\", \"A trade above 20x is rejected on chain\")",
+      "processorAddress": "0xb57b56034e2dc25161e2512CfC40b24EA3bee1Fb"
+    },
+    {
+      "id": "3",
+      "canonical": "3.424.tape",
+      "name": "ViperX risk circuit #3 \u2014 drawdown limit (value <= 156)",
+      "level": 5,
+      "inputs": 16,
+      "outputs": 1,
+      "inputsEffectiveWires": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "truthTable": {
+        "0000000000000000": "1",
+        "0000100110011000": "1",
+        "0000100111000000": "1",
+        "0000100111001000": "0",
+        "1111111111011000": "0"
+      },
+      "samples": [
+        {
+          "bits": "0000",
+          "fieldValue": 0,
+          "inputBits16": "0000000000000000",
+          "out": "1"
+        },
+        {
+          "bits": "9809",
+          "fieldValue": 155,
+          "inputBits16": "0000100110011000",
+          "out": "1"
+        },
+        {
+          "bits": "c009",
+          "fieldValue": 156,
+          "inputBits16": "0000100111000000",
+          "out": "1"
+        },
+        {
+          "bits": "c809",
+          "fieldValue": 157,
+          "inputBits16": "0000100111001000",
+          "out": "0"
+        },
+        {
+          "bits": "d8ff",
+          "fieldValue": 4095,
+          "inputBits16": "1111111111011000",
+          "out": "0"
+        }
+      ],
+      "function": "out = 1 iff the field value is <= 156. Field is built from caring wires [5,6,8,9,10,11,12,13,14,15,16,17] LSB-first (wires 2,3,4,7 are don't-cares); raw 16-bit input V is NOT the field value \u2014 see samples.",
+      "netlist": [
+        [
+          2,
+          2
+        ],
+        [
+          18,
+          1
+        ],
+        [
+          19,
+          19
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          21,
+          20
+        ],
+        [
+          4,
+          22
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          24,
+          23
+        ],
+        [
+          25,
+          25
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          27,
+          26
+        ],
+        [
+          28,
+          28
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          30,
+          29
+        ],
+        [
+          8,
+          31
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          9,
+          33
+        ],
+        [
+          34,
+          34
+        ],
+        [
+          10,
+          35
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          37,
+          36
+        ],
+        [
+          38,
+          38
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          40,
+          39
+        ],
+        [
+          13,
+          41
+        ],
+        [
+          14,
+          14
+        ],
+        [
+          43,
+          42
+        ],
+        [
+          44,
+          44
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          46,
+          45
+        ],
+        [
+          47,
+          47
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          49,
+          48
+        ],
+        [
+          50,
+          50
+        ],
+        [
+          17,
+          17
+        ],
+        [
+          52,
+          51
+        ],
+        [
+          53,
+          53
+        ]
+      ],
+      "netlistBytes": 259,
+      "netlistHash": "0xe78b7e0fc7e94906ca74654988156951397a35b9bd8a7b6af11b7a6f19f45b5d",
+      "calldata": "0x934d06ea000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000002c009000000000000000000000000000000000000000000000000000000000000",
+      "calldataExpected": "0x01 (bytes [0x01])",
+      "decode": "eth_call to the processor contract with the calldata above (function eval(uint256,bytes), selector 0x934d06ea). The return is ABI-encoded bytes: offset (32B) + length (32B) + data. Data is 1 byte: 0x00 = output 0, 0x01 = output 1. Bit packing (verified on-chain): the `bits` argument is little-endian bytes; byte j bit k drives wire (8j+k+2). Wire 0 is constant 0 (GND) and wire 1 is constant 1 (VCC) \u2014 wire 1 = 1 was proven by two discriminating evals (ViperX circuits 2 and 3). Netlist format (verified): raw bytes from netlist(tokenId) are 7-byte records [type=0x00 (NAND)][in1: uint24 BE][in2: uint24 BE]; gate i outputs wire (n+i) where n = number of input wires (wires 0..n-1); the circuit output is the last gate's output. Simulate in JS: wires[0]=0, wires[1]=1, wires[2..n-1] from bits, then each gate wires[n+i] = NOT(wires[a] AND wires[b]). This circuit's truth table is too large for a full listing (2^16 rows); the 5 rows in truthTable are on-chain-verified samples keyed by the raw 16-bit input V (MSB-first binary). The complete function is the threshold rule above, verified exhaustively by simulation over all caring wires and spot-checked on-chain at the threshold boundary (values 0/155/156/157/4095(field)). Example calldata evaluates the threshold value itself, expected output 1.",
+      "verifiedBlock": 76470115,
+      "verifiedAt": "2026-11-21",
+      "source": "https://www.okx.com/web3/explorer/xlayer/address/0xb57b56034e2dc25161e2512CfC40b24EA3bee1Fb ; https://docs.viperx.site/roadmap (\"Leverage, slippage, drawdown and cooldown limits\", \"A trade above 20x is rejected on chain\")",
+      "processorAddress": "0xb57b56034e2dc25161e2512CfC40b24EA3bee1Fb"
+    },
+    {
+      "id": "4",
+      "canonical": "4.424.tape",
+      "name": "ViperX risk circuit #4 \u2014 cooldown (value >= 5)",
+      "level": 6,
+      "inputs": 16,
+      "outputs": 1,
+      "inputsEffectiveWires": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "truthTable": {
+        "0000000000000000": "0",
+        "0000000000001000": "0",
+        "0000000000001010": "1",
+        "0000000000001100": "1",
+        "1111111111111110": "1"
+      },
+      "samples": [
+        {
+          "bits": "0000",
+          "fieldValue": 0,
+          "inputBits16": "0000000000000000",
+          "out": "0"
+        },
+        {
+          "bits": "0800",
+          "fieldValue": 4,
+          "inputBits16": "0000000000001000",
+          "out": "0"
+        },
+        {
+          "bits": "0a00",
+          "fieldValue": 5,
+          "inputBits16": "0000000000001010",
+          "out": "1"
+        },
+        {
+          "bits": "0c00",
+          "fieldValue": 6,
+          "inputBits16": "0000000000001100",
+          "out": "1"
+        },
+        {
+          "bits": "feff",
+          "fieldValue": 32767,
+          "inputBits16": "1111111111111110",
+          "out": "1"
+        }
+      ],
+      "function": "out = 1 iff the field value is >= 5. Field is built from caring wires [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17] LSB-first (wire 2 is a don't-care); raw 16-bit input V is NOT the field value \u2014 see samples.",
+      "netlist": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          19,
+          18
+        ],
+        [
+          20,
+          20
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          22,
+          21
+        ],
+        [
+          5,
+          23
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          25,
+          24
+        ],
+        [
+          26,
+          26
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          28,
+          27
+        ],
+        [
+          29,
+          29
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          31,
+          30
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          34,
+          33
+        ],
+        [
+          35,
+          35
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          37,
+          36
+        ],
+        [
+          38,
+          38
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          40,
+          39
+        ],
+        [
+          41,
+          41
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          43,
+          42
+        ],
+        [
+          44,
+          44
+        ],
+        [
+          13,
+          13
+        ],
+        [
+          46,
+          45
+        ],
+        [
+          47,
+          47
+        ],
+        [
+          14,
+          14
+        ],
+        [
+          49,
+          48
+        ],
+        [
+          50,
+          50
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          52,
+          51
+        ],
+        [
+          53,
+          53
+        ],
+        [
+          16,
+          16
+        ],
+        [
+          55,
+          54
+        ],
+        [
+          56,
+          56
+        ],
+        [
+          17,
+          17
+        ],
+        [
+          58,
+          57
+        ]
+      ],
+      "netlistBytes": 294,
+      "netlistHash": "0x347342e03e170e6b24f9666c95cf805a68e1f52ba98d04cbb0bf50c7af5b79a2",
+      "calldata": "0x934d06ea0000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000020a00000000000000000000000000000000000000000000000000000000000000",
+      "calldataExpected": "0x01 (bytes [0x01])",
+      "decode": "eth_call to the processor contract with the calldata above (function eval(uint256,bytes), selector 0x934d06ea). The return is ABI-encoded bytes: offset (32B) + length (32B) + data. Data is 1 byte: 0x00 = output 0, 0x01 = output 1. Bit packing (verified on-chain): the `bits` argument is little-endian bytes; byte j bit k drives wire (8j+k+2). Wire 0 is constant 0 (GND) and wire 1 is constant 1 (VCC) \u2014 wire 1 = 1 was proven by two discriminating evals (ViperX circuits 2 and 3). Netlist format (verified): raw bytes from netlist(tokenId) are 7-byte records [type=0x00 (NAND)][in1: uint24 BE][in2: uint24 BE]; gate i outputs wire (n+i) where n = number of input wires (wires 0..n-1); the circuit output is the last gate's output. Simulate in JS: wires[0]=0, wires[1]=1, wires[2..n-1] from bits, then each gate wires[n+i] = NOT(wires[a] AND wires[b]). This circuit's truth table is too large for a full listing (2^16 rows); the 5 rows in truthTable are on-chain-verified samples keyed by the raw 16-bit input V (MSB-first binary). The complete function is the threshold rule above, verified exhaustively by simulation over all caring wires and spot-checked on-chain at the threshold boundary (values 0/4/5/6/32767(field)). Example calldata evaluates the threshold value itself, expected output 1.",
+      "verifiedBlock": 76470115,
+      "verifiedAt": "2026-11-21",
+      "source": "https://www.okx.com/web3/explorer/xlayer/address/0xb57b56034e2dc25161e2512CfC40b24EA3bee1Fb ; https://docs.viperx.site/roadmap (\"Leverage, slippage, drawdown and cooldown limits\", \"A trade above 20x is rejected on chain\")",
+      "processorAddress": "0xb57b56034e2dc25161e2512CfC40b24EA3bee1Fb"
+    }
+  ],
+  "notes": "VERIFIED 2026-11-21 (block 76470149, chainId 196). All netlists were fetched live via netlist(tokenId); all truth tables / threshold rules were verified against on-chain eval(tokenId,bits): XBOT circuits 1 and 3 fully enumerated (16/16 and 32/32 eval calls, 0 mismatches vs the JS simulator); ViperX circuits verified by exhaustive simulation over caring wires + 20 on-chain threshold spot-checks (0 mismatches) + 2 discriminating evals proving wire 1 = constant 1. Total on-chain eval calls in this verification: 104 + 20 spot-checks + discriminating probes, 0 mismatches against the decoded netlist simulator. OKX Explorer could NOT be used from this VM (browser.open -> HTTP 403; explorer API endpoint returned empty) \u2014 contract source/ABI was NOT confirmed as verified on the explorer; the ABI above was recovered from deployed bytecode (selector extraction + 4byte.directory) and confirmed by live eth_call. Explorer links are included for manual checking. tapeout.net fetched 200 but returned only a 544-byte JS app shell (no processor list in text). TAPI-25 (community spec) lists netlist()/eval() as expected but normative ABI TODO \u2014 both functions exist on these contracts and the bit encoding was reverse-engineered here (little-endian bytes, byte j bit k -> wire 8j+k+2; wire 0 = 0, wire 1 = 1; gate i outputs wire n+i; output = last gate). ViperX circuit-name mapping: #1 = leverage is STRONG (threshold 2000 = 20.00x matches docs 'A trade above 20x is rejected on chain'); #2/#3/#4 = slippage/drawdown/cooldown in the docs' listed order is PLAUSIBLE but not individually proven (docs list the four names without per-ID mapping; thresholds are consistent: <=100 likely 1% slippage, <=156 drawdown, >=5 cooldown minimum). XBOT tokens 1,2 share one netlist (NAND-2); tokens 3,4,5 share one netlist (majority-3). The XBOT site calls circuit 3 'Circuit 3.2.268' (consensus). No adder, no latch, no multi-output circuit exists among these 6 distinct netlists \u2014 game levels must be built from the on-chain NAND primitive (functionally complete: AND/OR/XOR/NOT are compositions of NAND, verified against the on-chain NAND truth table), the on-chain majority gate, and the on-chain threshold gates. Do NOT claim an on-chain adder or latch. nextId() returns the circuit count, not the next token id. tokenURI() returns an empty string (no per-circuit on-chain metadata/names). Overclock circuits #5 (Game of Life) / #6 (CPU 4-bit) / #11 (neural net) were NOT included: their processor address is not published in the board page text. DeWEB/SiteRegistry addresses for X Layer were NOT verified (TapeKit SPEC is BNB-only); out of scope for this file. Factory cpuCount was 388 on 2026-10-23 (secondary source) and is 438 now \u2014 the ecosystem is growing; re-check cpuCount before submission."
+}
